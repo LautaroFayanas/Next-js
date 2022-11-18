@@ -11,8 +11,6 @@ export default function Layout({ children , title='' , description='' }) {
         </Head>
 
         <Header />
-
-        <h1>Inicio</h1>
         {children}
         <Footer />
     </>

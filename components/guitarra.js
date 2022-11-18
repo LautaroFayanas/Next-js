@@ -18,7 +18,7 @@ export default function Guitarra({guitarra}) {
             <p className={styles.descripcion}> {descripcion} </p>
             <p className={styles.precio}> ${precio} </p>
 
-            <Link legacyBehavior href={'/guitarras'}>
+            <Link legacyBehavior href={`/guitarras/${url}`}>
               <a className={styles.enlace}>Precio</a>
             </Link>
 
