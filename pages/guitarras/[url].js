@@ -1,12 +1,33 @@
 //Se debe crear un archivo entre corchetes para crear un Routing Dinamico en NextJS
 
-export default function Producto ({guitarra}) {
+import Image from "next/image"
+import Layout from "../../components/layout"
+import styles from '../../styles/guitarras.module.css'
 
-    console.log(guitarra[0].attributes.nombre);
 
-  return (
-    <div>[url]</div>
-  )
+export default function Producto({ guitarra }) {
+
+    const { nombre, descripcion, imagen, precio } = guitarra[0].attributes
+
+    return (
+        <Layout
+            title={`Guitarra ${nombre}`}
+        >
+            <div className={styles.guitarra}>
+
+                {<Image src={imagen.data[0].attributes.url} width={600} height={400}
+                    alt={`imagen guitarra ${nombre} `} />}
+
+                <div className={styles.contenido}>
+                    <h3> {nombre} </h3>
+                    <p className={styles.descripcion}> {descripcion} </p>
+                    <p className={styles.precio}> ${precio} </p>
+
+                </div>
+
+            </div>
+        </Layout>
+    )
 }
 
 // export async function getServerSideProps({query:{url}}){
@@ -21,30 +42,30 @@ export default function Producto ({guitarra}) {
 //     }
 // }
 
-export async function getStaticPaths(){
+export async function getStaticPaths() {
     const respuesta = await fetch(`${process.env.API_URL}/guitarras`)
-    const {data} = await respuesta.json()
+    const { data } = await respuesta.json()
 
-    const paths = data.map(guitarra => ({
+    const paths = data.map(guitarras => ({
         params: {
-            url: guitarra.attributes.url
+            url: guitarras.attributes.url
         }
     }))
 
     console.log(paths);
-    
-    return{
+
+    return {
         paths,
         fallback: false
     }
 }
 
-export async function getStaticProps({params:{url}}){
+export async function getStaticProps({ params: { url } }) {
 
     const respuesta = await fetch(`${process.env.API_URL}/guitarras?filters[url]=${url}&populate=imagen`)
-    const {data: guitarra} = await respuesta.json()
+    const { data: guitarra } = await respuesta.json()
 
-    return{
+    return {
         props: {
             guitarra
         }
