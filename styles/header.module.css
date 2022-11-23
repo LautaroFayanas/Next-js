@@ -21,6 +21,7 @@
 
 .navegacion{
     margin-top: 5rem;
+    align-items: center;
     display: flex;
     gap: 2rem;
 }
